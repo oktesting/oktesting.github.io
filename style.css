@@ -172,8 +172,9 @@ footer {
 }
 
 .hero {
-  margin: 50px auto;
+  margin: 0 auto;
   position: relative;
+  margin-top: -40px;
 }
 
 h1.name {
