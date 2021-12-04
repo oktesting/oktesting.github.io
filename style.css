@@ -446,6 +446,17 @@ li .description {
   font-weight: 300;
 }
 
+footer hr {
+  opacity: 0.7;
+}
+footer span {
+  font-size: 16px;
+}
+
+footer span a {
+  text-decoration: underline;
+}
+
 /* ---- Hover effects ---- */
 li:hover {
   color: #48a4d2;
