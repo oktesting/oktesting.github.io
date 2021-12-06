@@ -1,0 +1,29 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oktesting/oktesting.github.io.git"
+  },
+  "keywords": [
+    "résumé",
+    "DucCM"
+  ],
+  "author": "DucCM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oktesting/oktesting.github.io/issues"
+  },
+  "homepage": "https://github.com/oktesting/oktesting.github.io#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^2.2.19",
+    "vite": "^2.6.14"
+  }
+}
