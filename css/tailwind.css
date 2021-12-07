@@ -1,5 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  background-color: #fefefe;
+  color: #04143a;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  a {
+    @apply text-primary underline;
+  }
+
+  .container {
+    @apply mx-auto my-14 max-w-6xl;
+  }
+
+  .section-title {
+    @apply text-2xl font-semibold mb-4;
+  }
+
+  .section-sub-title {
+    @apply text-primary text-lg font-semibold;
+  }
+
+  .section-content {
+    @apply text-xl text-custom-purple font-semibold;
+  }
+
+  .section-content-description {
+    @apply text-base text-custom-gray;
+  }
+}

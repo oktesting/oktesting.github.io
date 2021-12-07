@@ -10,7 +10,8 @@ module.exports = {
     extend: {
       colors: {
         primary: '#4a90e2',
-        'custom-gray': '#81899c'
+        'custom-gray': '#81899c',
+        'custom-purple': '#5b6a9a'
       },
       fontFamily: {
         sans: ['Lato', ...defaultTheme.fontFamily.sans]
