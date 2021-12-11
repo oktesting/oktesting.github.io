@@ -3,11 +3,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  background-color: #fefefe;
-  color: #04143a;
+  /* background-color: #fefefe; */
+  /* color: #04143a; */
 }
 
-/*! tailwindcss v2.2.19 | MIT License | https://tailwindcss.com */
+/* ! tailwindcss v2.2.19 | MIT License | https://tailwindcss.com */
 
 /*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
@@ -582,6 +582,16 @@ video {
 *, ::before, ::after{
   --tw-border-opacity: 1;
   border-color: rgba(229, 231, 235, var(--tw-border-opacity));
+  --tw-blur: var(--tw-empty,/*!*/ /*!*/);
+  --tw-brightness: var(--tw-empty,/*!*/ /*!*/);
+  --tw-contrast: var(--tw-empty,/*!*/ /*!*/);
+  --tw-grayscale: var(--tw-empty,/*!*/ /*!*/);
+  --tw-hue-rotate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-invert: var(--tw-empty,/*!*/ /*!*/);
+  --tw-saturate: var(--tw-empty,/*!*/ /*!*/);
+  --tw-sepia: var(--tw-empty,/*!*/ /*!*/);
+  --tw-drop-shadow: var(--tw-empty,/*!*/ /*!*/);
+  --tw-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .container{
@@ -623,9 +633,12 @@ video {
   }
 }
 
-a{
+.dark body{
   --tw-text-opacity: 1;
-  color: rgba(74, 144, 226, var(--tw-text-opacity));
+  color: rgba(129, 137, 156, var(--tw-text-opacity));
+}
+
+a{
   text-decoration: underline;
 }
 
@@ -836,4 +849,29 @@ a{
 
 .hover\:opacity-100:hover{
   opacity: 1;
+}
+
+.dark .dark\:bg-dark-mode{
+  --tw-bg-opacity: 1;
+  background-color: rgba(25, 26, 25, var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-text-primary{
+  --tw-bg-opacity: 1;
+  background-color: rgba(74, 144, 226, var(--tw-bg-opacity));
+}
+
+.dark .dark\:text-primary{
+  --tw-text-opacity: 1;
+  color: rgba(74, 144, 226, var(--tw-text-opacity));
+}
+
+.dark .dark\:text-bg-primary{
+  --tw-text-opacity: 1;
+  color: rgba(217, 231, 248, var(--tw-text-opacity));
+}
+
+.dark .dark\:invert{
+  --tw-invert: invert(100%);
+  filter: var(--tw-filter);
 }

@@ -3,8 +3,8 @@
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  background-color: #fefefe;
-  color: #04143a;
+  /* background-color: #fefefe; */
+  /* color: #04143a; */
 }
 
 @tailwind base;
@@ -12,8 +12,12 @@ body {
 @tailwind utilities;
 
 @layer components {
+  body {
+    @apply dark:text-custom-gray;
+  }
+
   a {
-    @apply text-primary underline;
+    @apply underline;
   }
 
   .container {
