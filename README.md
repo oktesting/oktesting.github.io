@@ -1,3 +1,5 @@
+[![Build and Deploy](https://github.com/oktesting/oktesting.github.io/actions/workflows/build-and-deploy.yaml/badge.svg)](https://github.com/oktesting/oktesting.github.io/actions/workflows/build-and-deploy.yaml)
+
 # tailwind-css-scaffolding
 
 ## development
