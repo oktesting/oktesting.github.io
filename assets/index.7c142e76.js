@@ -41,17 +41,19 @@ const p = function polyfill() {
 };
 p();
 var tailwind = "";
-const PLAYLIST_URL = "https://open.spotify.com/embed/playlist/7dI5P0psZVQYmD9VHJIoSR";
 if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
   document.documentElement.classList.add("dark");
 } else {
   document.documentElement.classList.remove("dark");
 }
 window.onload = () => {
+  var _a;
   const hireMe = document.getElementById("mode-text");
   const spotify = document.getElementById("spotify");
+  const BASE_PLAYLIST_URL = ((_a = spotify.src) == null ? void 0 : _a.split("?")[0]) || "https://open.spotify.com/embed/playlist/7dI5P0psZVQYmD9VHJIoSR";
+  console.log({ PLAYLIST_URL: BASE_PLAYLIST_URL });
   if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    spotify.src = PLAYLIST_URL + "?theme=0";
+    spotify.src = BASE_PLAYLIST_URL + "?theme=0";
     hireMe.textContent = "blind me";
   } else {
     hireMe.textContent = "dim it";
@@ -63,12 +65,12 @@ window.onload = () => {
       document.documentElement.classList.remove("dark");
       localStorage.theme = "light";
       hireMe.textContent = "dim it";
-      spotify.src = PLAYLIST_URL;
+      spotify.src = BASE_PLAYLIST_URL;
     } else {
       document.documentElement.classList.add("dark");
       localStorage.theme = "dark";
       hireMe.textContent = "blind me";
-      spotify.src = PLAYLIST_URL + "?theme=0";
+      spotify.src = BASE_PLAYLIST_URL + "?theme=0";
     }
   });
 };
