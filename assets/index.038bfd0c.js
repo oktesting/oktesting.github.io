@@ -41,6 +41,7 @@ const p = function polyfill() {
 };
 p();
 var tailwind = "";
+const PLAYLIST_URL = "https://open.spotify.com/embed/playlist/7dI5P0psZVQYmD9VHJIoSR";
 if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
   document.documentElement.classList.add("dark");
 } else {
@@ -48,10 +49,13 @@ if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchM
 }
 window.onload = () => {
   const hireMe = document.getElementById("mode-text");
-  if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)
+  const spotify = document.getElementById("spotify");
+  if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    spotify.src = PLAYLIST_URL + "?theme=0";
     hireMe.textContent = "blind me";
-  else
+  } else {
     hireMe.textContent = "dim it";
+  }
   const please = document.getElementById("toggle-mode-btn");
   please.addEventListener("click", (e) => {
     e.preventDefault();
@@ -59,10 +63,12 @@ window.onload = () => {
       document.documentElement.classList.remove("dark");
       localStorage.theme = "light";
       hireMe.textContent = "dim it";
+      spotify.src = PLAYLIST_URL;
     } else {
       document.documentElement.classList.add("dark");
       localStorage.theme = "dark";
       hireMe.textContent = "blind me";
+      spotify.src = PLAYLIST_URL + "?theme=0";
     }
   });
 };
