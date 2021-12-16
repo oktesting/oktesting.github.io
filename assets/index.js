@@ -16,8 +16,8 @@ window.onload = () => {
   const BASE_PLAYLIST_URL =
     spotify.src?.split('?')[0] ||
     'https://open.spotify.com/embed/playlist/7dI5P0psZVQYmD9VHJIoSR';
-    console.log({PLAYLIST_URL: BASE_PLAYLIST_URL});
   // change the text hire me and spotify theme after page load
+  const lightrope = document.getElementById('lightrope');
   if (
     localStorage.theme === 'dark' ||
     (!('theme' in localStorage) &&
@@ -25,6 +25,7 @@ window.onload = () => {
   ) {
     spotify.src = BASE_PLAYLIST_URL + '?theme=0';
     hireMe.textContent = 'blind me';
+    lightrope.classList.add('on');
   } else {
     hireMe.textContent = 'dim it';
   }
@@ -42,12 +43,14 @@ window.onload = () => {
       localStorage.theme = 'light';
       hireMe.textContent = 'dim it';
       spotify.src = BASE_PLAYLIST_URL;
+      lightrope.classList.remove('on');
     } else {
       // => turn dark
       document.documentElement.classList.add('dark');
       localStorage.theme = 'dark';
       hireMe.textContent = 'blind me';
       spotify.src = BASE_PLAYLIST_URL + '?theme=0';
+      lightrope.classList.add('on');
     }
   });
 };
