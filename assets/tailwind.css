@@ -12,6 +12,15 @@ body {
 @tailwind utilities;
 
 @layer components {
+  ::-webkit-scrollbar {
+    @apply w-2
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-text-primary rounded
+  }
+  ::-webkit-scrollbar-track {
+    @apply rounded bg-primary dark:bg-opacity-0
+  }
   body {
     @apply dark:text-custom-gray;
   }
