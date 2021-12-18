@@ -77,4 +77,13 @@ window.onload = () => {
       lightrope.classList.add("on");
     }
   });
+  const creditBtn = document.getElementById("credit-btn");
+  creditBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const credits = document.getElementById("credits");
+    if (credits.classList.contains("hidden"))
+      credits.classList.remove("hidden");
+    else
+      credits.classList.add("hidden");
+  });
 };
