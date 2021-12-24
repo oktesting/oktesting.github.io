@@ -4,7 +4,7 @@ on:
     branches:
       - dev
 jobs:
-  build-and-deploy:
+  check-pull-request:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout # check out the source code of repo branch dev into runner then run command against the source code below
