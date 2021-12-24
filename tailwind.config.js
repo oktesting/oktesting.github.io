@@ -1,7 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   mode: 'jit', // just in time mode will purge all the massive unused css sent to browser while developing
-  purge: ['./**/*.html'],
+  purge: ['./src/**/*.js', './src/**/*.jsx'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     /* backgroundColor: (theme) => ({

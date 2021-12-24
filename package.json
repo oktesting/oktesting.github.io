@@ -2,11 +2,11 @@
   "name": "resume",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build && next export -o build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,15 @@
     "url": "https://github.com/oktesting/oktesting.github.io/issues"
   },
   "homepage": "https://github.com/oktesting/oktesting.github.io#readme",
+  "dependencies": {
+    "next": "12.0.7",
+    "next-themes": "0.0.15",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
   "devDependencies": {
+    "eslint": "8.5.0",
+    "eslint-config-next": "12.0.7",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.4",
     "sass": "^1.45.0",
