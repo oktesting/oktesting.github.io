@@ -7,19 +7,24 @@ body {
   /* color: #04143a; */
 }
 
+.content-wrapper {
+  /* smooth transition between theme */
+  transition: background-color 0.25s; 
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   ::-webkit-scrollbar {
-    @apply w-2
+    @apply w-2;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-text-primary rounded
+    @apply bg-text-primary rounded;
   }
   ::-webkit-scrollbar-track {
-    @apply rounded bg-primary dark:bg-opacity-0
+    @apply rounded bg-primary dark:bg-opacity-0;
   }
   body {
     @apply dark:text-custom-gray;
