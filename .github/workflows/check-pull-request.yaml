@@ -1,6 +1,6 @@
-name: 'Build and Deploy'
+name: 'Check pull request'
 on:
-  push:
+  pull_request:
     branches:
       - dev
 jobs:
@@ -16,11 +16,3 @@ jobs:
         run: |
           npm ci
           npm run build
-
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.7
-        with:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB }}
-          BRANCH: dev-preview
-          FOLDER: build
-          CLEAN: true
