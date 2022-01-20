@@ -36,7 +36,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <div className="container -my-14 flex">
+      <div className="container -mt-14 flex">
         <img
           src="https://www.svgrepo.com/show/184602/christmas-sock-christmas.svg"
           alt=""
@@ -108,19 +108,22 @@ export default function Home() {
           ¯\_(ツ)_/¯)
           <br />
           Btw, i do{' '}
-          <a
+          {/* <a
             className="text-primary"
             href="https://duccm4.notion.site/Movies-Reviews-5960a207bc234158a450173d8a2372ff"
             target="_blank"
             rel="noreferrer"
           >
             write
-          </a>{' '}
+          </a> */}
+          <span className="text-primary">
+            <Link href={'/posts'}>write</Link>
+          </span>{' '}
           sometimes
         </p>
       </div>
 
-      <div className="flex container">
+      <div className="flex container mt-14">
         <div className="w-1/2 mr-5">
           <h2 className="section-title">Familiar Technologies</h2>
           <div className="flex">
