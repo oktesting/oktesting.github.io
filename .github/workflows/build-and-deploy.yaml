@@ -12,6 +12,12 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: create .env file
+        run: |
+          touch .env
+          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }} >> .env
+          echo NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} >> .env
+
       - name: Build
         run: |
           npm ci
