@@ -13,6 +13,9 @@ jobs:
           persist-credentials: false
 
       - name: Build
+        env:
+          REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: |
           npm ci
           npm run build
