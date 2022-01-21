@@ -8,12 +8,14 @@ export const notion = new Client({
   auth: process.env.NOTION_TOKEN
 });
 
-export const getAllReviewsInfo = async () =>
-  (
+export const getAllReviewsInfo = async () => {
+  console.log('NOOOOOOOOOOOOOOOOO', process.env.REVIEWS_PAGE_ID); 
+  return (
     await notion.blocks.children.list({
       block_id: process.env.REVIEWS_PAGE_ID
     })
   ).results.map((item) => {
+    console.log('post: ', item);
     return {
       slug: kebabCase(item.child_page.title),
       title: item.child_page.title,
@@ -22,6 +24,7 @@ export const getAllReviewsInfo = async () =>
       createdAt: item.created_time
     };
   });
+};
 
 export const getOneReviewById = async (id) => {
   const info = await notion.pages.retrieve({ page_id: id });
