@@ -19,5 +19,7 @@ jobs:
 
       - name: Build
         run: |
+          touch .env
+          echo REVIEWS_PAGE_ID=${{ env.REVIEWS_PAGE_ID }} >> .env
           npm ci
           npm run build
