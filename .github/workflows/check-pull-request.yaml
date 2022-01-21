@@ -7,6 +7,10 @@ on:
 jobs:
   check-pull-request:
     runs-on: ubuntu-latest
+    env:
+      REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+
     steps:
       - name: Checkout # check out the source code of repo branch dev into runner then run command against the source code below
         uses: actions/checkout@v2.3.1
@@ -15,9 +19,5 @@ jobs:
 
       - name: Build
         run: |
-          touch .env
-          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }} >> .env
-          echo NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} >> .env
           npm ci
           npm run build
-          rm .env
