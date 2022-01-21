@@ -4,10 +4,6 @@ on:
     branches:
       - dev
 
-env:
-  REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
-  NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-
 jobs:
   check-pull-request:
     runs-on: ubuntu-latest
@@ -19,5 +15,9 @@ jobs:
 
       - name: Build
         run: |
+          touch .env
+          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }} >> .env
+          echo NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} >> .env
           npm ci
           npm run build
+          rm .env
