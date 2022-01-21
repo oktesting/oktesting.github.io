@@ -20,6 +20,8 @@ jobs:
       - name: Build
         run: |
           touch .env
-          echo REVIEWS_PAGE_ID=${{ env.REVIEWS_PAGE_ID }} >> .env
+          echo REVIEWS_PAGE_ID=${{ env.REVIEWS_PAGE_ID }}
+          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }}
+          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }} | sed 's/./& /g'
           npm ci
           npm run build
