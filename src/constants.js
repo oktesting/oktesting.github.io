@@ -5,5 +5,6 @@ export const NOTION_TYPES = {
   EXTERNAL: 'external',
   FILE: 'file',
   TOGGLE: 'toggle',
-  BULLETED_LIST_ITEM: 'bulleted_list_item'
+  BULLETED_LIST_ITEM: 'bulleted_list_item',
+  CHILD_PAGE: 'child_page'
 };

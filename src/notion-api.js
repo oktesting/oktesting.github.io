@@ -8,34 +8,45 @@ export const notion = new Client({
   auth: process.env.NOTION_TOKEN
 });
 
-export const getAllReviewsInfo = async () =>
-  (
-    await notion.blocks.children.list({
-      block_id: process.env.REVIEWS_PAGE_ID
-    })
-  ).results.map((item) => {
-    return {
-      slug: kebabCase(item.child_page.title),
-      title: item.child_page.title,
-      id: item.id,
-      lastEditedAt: item.last_edited_time,
-      createdAt: item.created_time
-    };
-  });
+export const getAllReviewsInfo = async () => {
+  try {
+    return (
+      await notion.blocks.children.list({
+        block_id: process.env.REVIEWS_PAGE_ID
+      })
+    ).results
+      .filter((item) => item.type === NOTION_TYPES.CHILD_PAGE)
+      .map((item) => {
+        return {
+          slug: kebabCase(item.child_page.title),
+          title: item.child_page.title,
+          id: item.id,
+          lastEditedAt: item.last_edited_time,
+          createdAt: item.created_time
+        };
+      });
+  } catch (error) {
+    console.log('getAllReviewsInfo -> error', error);
+  }
+};
 
 export const getOneReviewById = async (id) => {
-  const info = await notion.pages.retrieve({ page_id: id });
-  const content = await notion.blocks.children.list({ block_id: id });
-  if (content.results?.length)
-    return {
-      content,
-      // content: processPost(content),
-      title: info.properties.title.title[0].plain_text,
-      lastEditedAt: info.last_edited_time,
-      createdAt: info.created_time,
-      id: info.id
-      // slug: kebabCase(info.child_page.title),
-    };
+  try {
+    const info = await notion.pages.retrieve({ page_id: id });
+    const content = await notion.blocks.children.list({ block_id: id });
+    if (content.results?.length)
+      return {
+        content,
+        // content: processPost(content),
+        title: info.properties.title.title[0].plain_text,
+        lastEditedAt: info.last_edited_time,
+        createdAt: info.created_time,
+        id: info.id
+        // slug: kebabCase(info.child_page.title),
+      };
+  } catch (error) {
+    console.log('getOneReviewById -> error', error);
+  }
 };
 
 const processPost = ({ results }) => {
