@@ -3,14 +3,10 @@ on:
   pull_request:
     branches:
       - dev
-
-env:
-  REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
-  NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
-
 jobs:
   check-pull-request:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout # check out the source code of repo branch dev into runner then run command against the source code below
         uses: actions/checkout@v2.3.1
@@ -18,6 +14,9 @@ jobs:
           persist-credentials: false
 
       - name: Build
+        env:
+          REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: |
           npm ci
           npm run build
