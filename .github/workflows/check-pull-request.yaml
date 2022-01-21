@@ -8,9 +8,6 @@ jobs:
   check-pull-request:
     runs-on: ubuntu-latest
     environment: github-pages
-    env:
-      REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
-      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
 
     steps:
       - name: Checkout # check out the source code of repo branch dev into runner then run command against the source code below
@@ -20,9 +17,5 @@ jobs:
 
       - name: Build
         run: |
-          touch .env
-          echo REVIEWS_PAGE_ID=${{ env.REVIEWS_PAGE_ID }}
-          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }}
-          echo REVIEWS_PAGE_ID=${{ secrets.REVIEWS_PAGE_ID }} | sed 's/./& /g'
           npm ci
           npm run build
