@@ -7,6 +7,7 @@ on:
 jobs:
   check-pull-request:
     runs-on: ubuntu-latest
+    environment: github-pages
     env:
       REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
