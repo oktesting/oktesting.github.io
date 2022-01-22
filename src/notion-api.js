@@ -1,7 +1,7 @@
 import { kebabCase } from 'lodash';
-
 import { Client } from '@notionhq/client';
-import { NOTION_TYPES } from '/src/constants';
+
+import { NOTION_TYPES } from './constants';
 
 // Initializing a client
 export const notion = new Client({
@@ -33,7 +33,42 @@ export const getAllReviewsInfo = async () => {
 export const getOneReviewById = async (id) => {
   try {
     const info = await notion.pages.retrieve({ page_id: id });
-    const content = await notion.blocks.children.list({ block_id: id });
+    let content = await notion.blocks.children.list({ block_id: id });
+
+    // processing block type that need to be fetched: column_list, toggle,... => has_children == true
+    const getFullContent = async (content) => {
+      if (content.results?.length) {
+        const hasChidldrenBlocks = content.results.filter((block) => block.has_children);
+        const fetchedBlocks = await Promise.allSettled(
+          hasChidldrenBlocks.map((block) =>
+            notion.blocks.children.list({ block_id: block.id })
+          )
+        );
+
+        // map fetched data using index since the returned order of Promise.allSettle is preserved!
+        const mappedChildrenBlocks = {};
+        for (const [index, block] of hasChidldrenBlocks.entries()) {
+          if (fetchedBlocks[index].status === 'fulfilled')
+            /* added recursion to get the fullest of the fullContent itself, 
+              like children of children, 
+              also called 'grandchildren' (and their children too)
+            **/
+            mappedChildrenBlocks[block.id] = await getFullContent(
+              fetchedBlocks[index].value
+            );
+        }
+
+        content.results?.forEach(async (block) => {
+          if (mappedChildrenBlocks[block.id]) {
+            block[block.type].children = mappedChildrenBlocks[block.id];
+          }
+        });
+
+        return content;
+      }
+    };
+    content = await getFullContent(content);
+
     if (content.results?.length)
       return {
         content,

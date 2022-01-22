@@ -33,13 +33,13 @@ const renderPost = (post) => {
       case NOTION_TYPES.PARAGRAPH: {
         if (content.text?.length) {
           return (
-            <p className="mb-2">{content.text.map((block) => renderBlock(block))}</p>
+            <p className="my-1">{content.text.map((block) => renderBlock(block))}</p>
           );
         }
         break;
       }
       case NOTION_TYPES.TEXT: {
-        // TODO: add processing anotations for text
+        // TODO: add processing anotations for text color
         const {
           annotations: {
             color,
@@ -56,16 +56,23 @@ const renderPost = (post) => {
           ${strikethrough ? 'line-through' : ''}
           ${italic ? 'italic' : ''}
           ${underline ? 'underline' : ''}
+          ${color ? `text-${color}-500` : ''}
           `}
           >
-            {content.content || ''}
+            {code ? (
+              <code className="rounded-md p-[2px] text-lime-400 bg-gray-700">
+                {content.content || ''}
+              </code>
+            ) : (
+              content.content || ''
+            )}
           </span>
         );
         break;
       }
       case NOTION_TYPES.IMAGE: {
         if (content.type)
-          return <img className="mx-auto" src={content[content.type]?.url} alt="" />;
+          return <img className="mx-auto my-1" src={content[content.type]?.url} alt="" />;
         break;
       }
       case NOTION_TYPES.BULLETED_LIST_ITEM: {
@@ -75,6 +82,36 @@ const renderPost = (post) => {
               <li>{renderBlock(block)}</li>
             ))}
           </ul>
+        );
+      }
+      case NOTION_TYPES.TOGGLE: {
+        return (
+          <div className="flex my-1 gap-x-1">
+            <div className="">
+              <div className="hover:bg-text-primary hover:rounded-md cursor-pointer relative top-1">
+                👉
+              </div>
+            </div>
+            <div>
+              <div className="my-1">
+                {content.text.map((block) => renderBlock(block))}
+              </div>
+              {renderPost(content.children)}
+            </div>
+          </div>
+        );
+      }
+      case NOTION_TYPES.COLUMN_LIST: {
+        break;
+      }
+      case NOTION_TYPES.TO_DO: {
+        return (
+          <div className="flex gap-x-1">
+            {content.checked ? '✔' : '⭕'}
+            <div className={`${content.checked ? 'line-through' : ''}`}>
+              {content.text.map((block) => renderBlock(block))}
+            </div>
+          </div>
         );
       }
 
