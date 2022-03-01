@@ -41,6 +41,7 @@ const renderPost = (post) => {
       case NOTION_TYPES.TEXT: {
         // TODO: add processing anotations for text color
         const {
+          href = null,
           annotations: {
             color,
             code = false,
@@ -55,9 +56,13 @@ const renderPost = (post) => {
             className={`${bold ? 'font-semibold' : ''}
           ${strikethrough ? 'line-through' : ''}
           ${italic ? 'italic' : ''}
-          ${underline ? 'underline' : ''}
+          ${underline || href ? 'underline' : ''}
           ${color ? `text-${color}-500` : ''}
+          ${href ? 'cursor-pointer opacity-70' : ''}
           `}
+            onClick={() => {
+              if (href) window.open(href);
+            }}
           >
             {code ? (
               <code className="rounded-md p-[2px] text-lime-400 bg-gray-700">
@@ -72,7 +77,14 @@ const renderPost = (post) => {
       }
       case NOTION_TYPES.IMAGE: {
         if (content.type)
-          return <img className="mx-auto my-1" src={content[content.type]?.url} alt="" />;
+          return (
+            <div className="text-sm">
+              <img className="mx-auto my-1" src={content[content.type]?.url} alt="" />
+              {content.caption?.length
+                ? content.caption.map((block) => renderBlock(block))
+                : null}
+            </div>
+          );
         break;
       }
       case NOTION_TYPES.BULLETED_LIST_ITEM: {
@@ -102,7 +114,14 @@ const renderPost = (post) => {
         );
       }
       case NOTION_TYPES.COLUMN_LIST: {
-        break;
+        return (
+          <div className="flex justify-between gap-x-2">
+            {renderPost(content.children)}
+          </div>
+        );
+      }
+      case NOTION_TYPES.COLUMN: {
+        return <div>{renderPost(content.children)}</div>;
       }
       case NOTION_TYPES.TO_DO: {
         return (
@@ -114,13 +133,19 @@ const renderPost = (post) => {
           </div>
         );
       }
-
+      case NOTION_TYPES.QUOTE: {
+        return (
+          <div className="border-black border-l-4 dark:border-primary">
+            <div className="ml-4">{content.text.map((block) => renderBlock(block))}</div>
+          </div>
+        );
+      }
       default:
         break;
     }
     return null;
   };
-  return <div>{post.results.map((block) => renderBlock(block))}</div>;
+  return <>{post.results.map((block) => renderBlock(block))}</>;
 };
 
 export const getStaticPaths = async (context) => {
