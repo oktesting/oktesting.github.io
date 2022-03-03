@@ -10,7 +10,8 @@ export const NOTION_TYPES = {
   COLUMN_LIST: 'column_list',
   COLUMN: 'column',
   TO_DO: 'to_do',
-  QUOTE: 'quote'
+  QUOTE: 'quote',
+  DIVIDER: 'divider'
 };
 
 export const NOTION_TYPES_NEED_TO_BE_FETCHED = [

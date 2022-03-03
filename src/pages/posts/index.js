@@ -8,7 +8,7 @@ const PostsPage = () => {
         <title>posts</title>
       </Head>
       <div className="container max-w-3xl text-center">
-        <div className="text-3xl font-medium pb-2 text-primary">
+        {/* <div className="text-3xl font-medium pb-2 text-primary">
           <Link href={'/posts/difficulties'}>Technical difficulties</Link>
         </div>
         <div className="text-left text-lg">
@@ -27,7 +27,7 @@ const PostsPage = () => {
           wonderful yet bizarre dream until it's half faded. I want to display SOME of
           them here on this page.
         </div>
-        <hr className="my-8" />
+        <hr className="my-8" /> */}
         <div className="text-3xl font-medium pb-2 text-primary">
           <Link href={'/posts/reviews'}>Movie reviews</Link>
         </div>

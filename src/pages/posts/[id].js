@@ -115,13 +115,13 @@ const renderPost = (post) => {
       }
       case NOTION_TYPES.COLUMN_LIST: {
         return (
-          <div className="flex justify-between gap-x-2">
+          <div className="flex justify-between gap-x-6">
             {renderPost(content.children)}
           </div>
         );
       }
       case NOTION_TYPES.COLUMN: {
-        return <div>{renderPost(content.children)}</div>;
+        return <div className='flex-1'>{renderPost(content.children)}</div>;
       }
       case NOTION_TYPES.TO_DO: {
         return (
@@ -139,6 +139,9 @@ const renderPost = (post) => {
             <div className="ml-4">{content.text.map((block) => renderBlock(block))}</div>
           </div>
         );
+      }
+      case NOTION_TYPES.DIVIDER: {
+        return <hr className="my-6 dark:opacity-50" />;
       }
       default:
         break;
