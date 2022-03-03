@@ -35,7 +35,7 @@ body {
   }
 
   .container {
-    @apply mx-auto my-14 max-w-6xl;
+    @apply mx-auto max-w-6xl;
   }
 
   .section-title {
