@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - dev
+  schedule:
+    # rebuild and deploy every hour at 54th min to help with the latest post and expired signed image links from notion
+    - cron: '54 * * * *'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
