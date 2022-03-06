@@ -171,7 +171,7 @@ export default function Home() {
         <div className="w-1/2 ml-5">
           <h2 className="section-title">Experiences</h2>
           <div className="flex my-7">
-            <span className="w-3/12 mr-3 section-sub-title">Jun 2020 to Now</span>
+            <span className="w-3/12 mr-3 section-sub-title">Jun 2020 to Mar 2022</span>
             <div className="w-9/12 ml-3">
               <h3 className="section-content">FPT Telecom International</h3>
               <span className="section-content-description">Software Developer</span>

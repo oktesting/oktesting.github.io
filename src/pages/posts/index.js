@@ -45,6 +45,18 @@ const PostsPage = () => {
           These things that i wrote are the place that i will come back to as i decide to
           do a rewatch on those movies in the future, to see whether the time has changed
           my initial perspective on them or not.
+          <ul className="list-disc list-inside">
+            <li>
+              some reviews contain{' '}
+              <span className="font-semibold text-red-400 underline">spoiler</span>,
+              continue at your own risk!
+            </li>
+            <li>
+              some reviews have a lot of{' '}
+              <span className="font-semibold underline text-red-400">fruity</span>{' '}
+              languages
+            </li>
+          </ul>
         </div>
       </div>
     </>
