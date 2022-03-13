@@ -1,29 +1,6 @@
-import { format, parseISO } from 'date-fns';
-import Head from 'next/head';
-import { NOTION_TYPES } from '../../constants';
-import { getAllReviewsInfo, getOneReviewById } from '/src/notion-api';
+import { NOTION_TYPES } from '../constants';
 
-const PostsPage = ({ post }) => {
-  return (
-    <>
-      <Head>
-        <title>{post?.title}</title>
-      </Head>
-      <div className="container max-w-3xl">
-        <div className="text-3xl font-medium pb-2 text-primary text-center">
-          {post.title || 'untitled'}
-        </div>
-        <div className="text-lg">{renderPost(post.content)}</div>
-        <div className="text-right mt-5">
-          Created at: {format(parseISO(post.createdAt), 'HH:mm dd/MM/yyyy')} | Last
-          edited: {format(parseISO(post.lastEditedAt), 'HH:mm dd/MM/yyyy')}
-        </div>
-      </div>
-    </>
-  );
-};
-
-const renderPost = (post) => {
+export const renderPost = (post) => {
   if (!post?.results?.length) return null;
   const renderBlock = (block) => {
     const { type } = block;
@@ -121,7 +98,7 @@ const renderPost = (post) => {
         );
       }
       case NOTION_TYPES.COLUMN: {
-        return <div className='flex-1'>{renderPost(content.children)}</div>;
+        return <div className="flex-1">{renderPost(content.children)}</div>;
       }
       case NOTION_TYPES.TO_DO: {
         return (
@@ -150,18 +127,3 @@ const renderPost = (post) => {
   };
   return <>{post.results.map((block) => renderBlock(block))}</>;
 };
-
-export const getStaticPaths = async (context) => {
-  const reviewsInfo = await getAllReviewsInfo();
-  return {
-    fallback: false, // since we only have the static site generation option
-    paths: reviewsInfo.map(({ slug, id }) => ({ params: { id } }))
-  };
-};
-
-export const getStaticProps = async (context) => {
-  const { id } = context.params;
-  return { props: { post: await getOneReviewById(id) } };
-};
-
-export default PostsPage;

@@ -172,10 +172,12 @@ export default function Home() {
           <h2 className="section-title">Experiences</h2>
           <div className="flex my-7">
             <span className="w-3/12 mr-3 section-sub-title">Jun 2020 to Mar 2022</span>
-            <div className="w-9/12 ml-3">
-              <h3 className="section-content">FPT Telecom International</h3>
-              <span className="section-content-description">Software Developer</span>
-            </div>
+            <Link href={'/posts/misc/efa6e6bb-4762-43a5-95e7-644ee2c43004'}>
+              <div className="w-9/12 ml-3 hover:cursor-pointer hover:underline">
+                <h3 className="section-content">FPT Telecom International</h3>
+                <span className="section-content-description">Software Developer</span>
+              </div>
+            </Link>
           </div>
           <div className="flex my-7">
             <span className="w-3/12 mr-3 section-sub-title">Dec 2018 to Jun 2019</span>

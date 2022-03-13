@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { getAllReviewsInfo } from '../../notion-api';
+import { getAllPostsInfo } from '../../../utils/notion-api';
 
 const ReviewsPage = ({ reviews = [] }) => {
   return (
@@ -14,7 +14,7 @@ const ReviewsPage = ({ reviews = [] }) => {
           Movie reviews</div>
         {reviews.map((review) => (
           <div className="font-medium text-2xl no-underline text-primary mb-2">
-            <Link href={`/posts/${review.id}`}>{review.title}</Link>
+            <Link href={`/posts/reviews/${review.id}`}>{review.title}</Link>
           </div>
         ))}
       </div>
@@ -23,7 +23,7 @@ const ReviewsPage = ({ reviews = [] }) => {
 };
 
 export const getStaticProps = async () => {
-  return { props: { reviews: await getAllReviewsInfo() } };
+  return { props: { reviews: await getAllPostsInfo(process.env.REVIEWS_PAGE_ID) } };
 };
 
 export default ReviewsPage;

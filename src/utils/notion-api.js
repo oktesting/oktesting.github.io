@@ -1,18 +1,18 @@
 import { kebabCase } from 'lodash';
 import { Client } from '@notionhq/client';
 
-import { NOTION_TYPES } from './constants';
+import { NOTION_TYPES } from '../constants';
 
 // Initializing a client
 export const notion = new Client({
   auth: process.env.NOTION_TOKEN
 });
 
-export const getAllReviewsInfo = async () => {
+export const getAllPostsInfo = async (pageId) => {
   try {
     return (
       await notion.blocks.children.list({
-        block_id: process.env.REVIEWS_PAGE_ID
+        block_id: pageId
       })
     ).results
       .filter((item) => item.type === NOTION_TYPES.CHILD_PAGE)
@@ -30,7 +30,7 @@ export const getAllReviewsInfo = async () => {
   }
 };
 
-export const getOneReviewById = async (id) => {
+export const getOnePostById = async (id) => {
   try {
     const info = await notion.pages.retrieve({ page_id: id });
     let content = await notion.blocks.children.list({ block_id: id });
