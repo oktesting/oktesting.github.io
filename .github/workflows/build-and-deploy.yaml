@@ -19,6 +19,7 @@ jobs:
       - name: Build
         env:
           REVIEWS_PAGE_ID: ${{ secrets.REVIEWS_PAGE_ID }}
+          MISC_PAGE_ID: ${{ secrets.MISC_PAGE_ID }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
         run: |
           npm ci
