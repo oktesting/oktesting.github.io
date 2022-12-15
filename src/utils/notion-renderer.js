@@ -9,7 +9,7 @@ export const renderPost = (post) => {
     const content = block[type];
 
     if (isNaN(parseInt(numberedListItemCount[level]))) numberedListItemCount[level] = 0; // init for current level
-    console.log(type, numberedListItemCount);
+    // console.log(type, numberedListItemCount);
     // only increase count when NUMBERED_LIST_ITEMs are adjecent within same level, otherwise, reset count to 0
     if (type !== NOTION_TYPES.NUMBERED_LIST_ITEM) numberedListItemCount[level] = 0;
 
