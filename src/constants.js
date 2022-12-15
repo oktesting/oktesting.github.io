@@ -11,7 +11,12 @@ export const NOTION_TYPES = {
   COLUMN: 'column',
   TO_DO: 'to_do',
   QUOTE: 'quote',
-  DIVIDER: 'divider'
+  DIVIDER: 'divider',
+  NUMBERED_LIST_ITEM: 'numbered_list_item',
+  MENTION: 'mention',
+  DATE: 'date',
+  USER: 'user',
+  PAGE: 'page'
 };
 
 export const NOTION_TYPES_NEED_TO_BE_FETCHED = [

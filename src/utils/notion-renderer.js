@@ -1,16 +1,25 @@
-import { NOTION_TYPES } from '../constants';
+import { NOTION_TYPES } from './../constants';
+import { format, parseISO } from 'date-fns';
 
 export const renderPost = (post) => {
   if (!post?.results?.length) return null;
-  const renderBlock = (block) => {
+  let numberedListItemCount = [];
+  const renderBlock = (block, level = 0) => {
     const { type } = block;
     const content = block[type];
+
+    if (isNaN(parseInt(numberedListItemCount[level]))) numberedListItemCount[level] = 0; // init for current level
+    console.log(type, numberedListItemCount);
+    // only increase count when NUMBERED_LIST_ITEMs are adjecent within same level, otherwise, reset count to 0
+    if (type !== NOTION_TYPES.NUMBERED_LIST_ITEM) numberedListItemCount[level] = 0;
 
     switch (type) {
       case NOTION_TYPES.PARAGRAPH: {
         if (content.text?.length) {
           return (
-            <p className="my-1">{content.text.map((block) => renderBlock(block))}</p>
+            <p className="my-1">
+              {content.text.map((block) => renderBlock(block, level + 1))}
+            </p>
           );
         }
         break;
@@ -50,7 +59,6 @@ export const renderPost = (post) => {
             )}
           </span>
         );
-        break;
       }
       case NOTION_TYPES.IMAGE: {
         if (content.type)
@@ -58,7 +66,7 @@ export const renderPost = (post) => {
             <div className="text-sm">
               <img className="mx-auto my-1" src={content[content.type]?.url} alt="" />
               {content.caption?.length
-                ? content.caption.map((block) => renderBlock(block))
+                ? content.caption.map((block) => renderBlock(block, level + 1))
                 : null}
             </div>
           );
@@ -67,10 +75,16 @@ export const renderPost = (post) => {
       case NOTION_TYPES.BULLETED_LIST_ITEM: {
         return (
           <ul className="list-disc list-inside">
-            {content.text.map((block) => (
-              <li>{renderBlock(block)}</li>
-            ))}
+            <li>{content.text.map((block) => renderBlock(block, level + 1))}</li>
           </ul>
+        );
+      }
+      case NOTION_TYPES.NUMBERED_LIST_ITEM: {
+        return (
+          // increase(FIRST) the count for current level
+          <ol start={++numberedListItemCount[level]} className="list-decimal list-inside">
+            <li>{content.text.map((block) => renderBlock(block, level + 1))}</li>
+          </ol>
         );
       }
       case NOTION_TYPES.TOGGLE: {
@@ -83,7 +97,7 @@ export const renderPost = (post) => {
             </div>
             <div>
               <div className="my-1">
-                {content.text.map((block) => renderBlock(block))}
+                {content.text.map((block) => renderBlock(block, level + 1))}
               </div>
               {renderPost(content.children)}
             </div>
@@ -105,7 +119,7 @@ export const renderPost = (post) => {
           <div className="flex gap-x-1">
             {content.checked ? '✔' : '⭕'}
             <div className={`${content.checked ? 'line-through' : ''}`}>
-              {content.text.map((block) => renderBlock(block))}
+              {content.text.map((block) => renderBlock(block, level + 1))}
             </div>
           </div>
         );
@@ -113,12 +127,44 @@ export const renderPost = (post) => {
       case NOTION_TYPES.QUOTE: {
         return (
           <div className="border-black border-l-4 dark:border-primary">
-            <div className="ml-4">{content.text.map((block) => renderBlock(block))}</div>
+            <div className="ml-4">
+              {content.text.map((block) => renderBlock(block, level + 1))}
+            </div>
           </div>
         );
       }
       case NOTION_TYPES.DIVIDER: {
         return <hr className="my-6 dark:opacity-50" />;
+      }
+      case NOTION_TYPES.MENTION: {
+        return (
+          <span className="bg-gray-200 hover:cursor-pointer">
+            {renderBlock(content, level + 1)}
+          </span>
+        );
+      }
+      case NOTION_TYPES.DATE: {
+        const DATE_FORMAT = 'yyyy-MM-dd',
+          DATETIME_FORMAT = 'HH:mm dd/MM/yyyy';
+        // notion stored datetime in ISO format, to distinguish between date and datetime relies in their lengths
+        const dateOnly = (date = '') => date.length === DATE_FORMAT.length;
+        let value = format(
+          parseISO(content.start),
+          dateOnly(content.start) ? DATE_FORMAT : DATETIME_FORMAT
+        );
+        if (content.end)
+          value += ` -> ${format(
+            parseISO(content.start),
+            dateOnly(content.start) ? DATE_FORMAT : DATETIME_FORMAT
+          )}`;
+        return value;
+      }
+      case NOTION_TYPES.USER: {
+        // TODO: could extend the logic to do popup shit but kinda overkill rn
+        return `@${content.name}`;
+      }
+      case NOTION_TYPES.PAGE: {
+        // TODO: NAH!
       }
       default:
         break;
