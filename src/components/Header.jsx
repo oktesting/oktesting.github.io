@@ -19,7 +19,10 @@ const Header = () => {
             </Link>
             <span className="w-64 text-center bg-primary round ml-2 text-primary rounded-md py-4 leading-none h-12 font-semibold text-lg dark:text-bg-primary dark:bg-text-primary">
               ༼つ◕_◕ ༽つ{' '}
-              <span id="mode-text">{theme === 'dark' ? 'blind me' : 'dim it'}</span>,{' '}
+              <span suppressHydrationWarning id="mode-text">
+                {theme === 'dark' ? 'go blind' : 'dim it'}
+              </span>
+              ,{' '}
               <span
                 id="toggle-mode-btn"
                 onClick={toggleMode}

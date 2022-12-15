@@ -5,6 +5,16 @@ import style from '../styles/homepage.module.scss';
 import { useTheme } from 'next-themes';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import {
+  isAfter,
+  isBefore,
+  setMonth,
+  addWeeks,
+  setDate,
+  endOfYear,
+  startOfDay,
+  startOfYear
+} from 'date-fns';
 
 const BASE_PLAYLIST_URL =
   'https://open.spotify.com/embed/playlist/7dI5P0psZVQYmD9VHJIoSR';
@@ -19,7 +29,30 @@ export default function Home() {
   // once loaded, force lightrope and spotify elements to dark theme property since its initial states don't include them
   const lightrope = useRef();
   const spotify = useRef();
+  const [isHolidaySeason, setHolidaySeason] = useState(false);
+
   useEffect(() => {
+    const today = new Date();
+    /**
+     * holiday season decor often starts at december first "this year" and last to new year eve plus 1 week later "next year".
+     * this "this year" + "last year" situation can be solve by:
+     * spliting holiday season of one year into 2 range, beginning of the year range and ending of the year range
+     */
+
+    // beginning of the year range
+    const decemberFirst = startOfDay(setDate(setMonth(today, 11), 1));
+    const decemberLast = endOfYear(today);
+
+    // ending of the year range
+    const januaryFirst = startOfYear(today);
+    const januaryFirstPlus1Week = addWeeks(januaryFirst, 1);
+
+    setHolidaySeason(
+      (isAfter(today, decemberFirst) && isBefore(today, decemberLast)) ||
+        (isAfter(today, januaryFirst) && isBefore(today, januaryFirstPlus1Week))
+    );
+
+    if (!isHolidaySeason) return;
     if (theme === 'dark') {
       lightrope.current.classList?.add(style.on);
       spotify.current.src = playlistURL;
@@ -35,67 +68,8 @@ export default function Home() {
         {/* <meta httpEquiv="Content-Type" content="text/html" charset="utf-8" /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+      {isHolidaySeason && <Lightrope lightropeRef={lightrope} theme={theme} />}
 
-      <div className="container -mt-14 flex">
-        <img
-          src="https://www.svgrepo.com/show/184602/christmas-sock-christmas.svg"
-          alt=""
-          className="h-14 w-14"
-        />
-        <ul
-          className={`${style.lightrope} ${theme === 'dark' ? style.on : ''}`}
-          ref={lightrope}
-        >
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-        <img
-          src="https://www.svgrepo.com/show/184560/bauble-christmas.svg"
-          alt=""
-          className="h-12 w-12"
-          style={{ transform: 'scaleX(-1)' }}
-        />
-      </div>
       <div className="container">
         <h2 className="text-4xl text-primary">about me...</h2>
         <p className="text-lg">
@@ -129,10 +103,11 @@ export default function Home() {
           <div className="flex">
             <span className="w-3/12 mr-3 section-sub-title">Languages</span>
             <div className="w-9/12 ml-3">
-              <h3 className="section-content">JavaScript</h3>
+              <h3 className="section-content">JavaScript / TypeScript</h3>
               <span className="section-content-description">
-                And HTML+CSS if u consider them as programming languages. Also some Java
-                but i don't use it for a very long time since graduate.
+                And HTML + CSS if u consider them as programming languages.
+                <br />A bit of Go is alright
+                {/* <br /> Also some Java but i don't use it for a very long time since graduate. */}
               </span>
             </div>
           </div>
@@ -140,10 +115,13 @@ export default function Home() {
             <span className="w-3/12 mr-3 section-sub-title">Web Development</span>
             <div className="w-9/12 ml-3">
               <h3 className="section-content">
-                NodeJS, ExpressJS, ReactJS, NextJS, Redux, AntD...
+                NodeJS, ExpressJS, ReactJS, NextJS, NestJS
               </h3>
               <span className="section-content-description">
-                all js related, how original and cliché (i know)
+                yes, all js related 😑 {/* how original and cliché (i know) */}
+                <br />
+                been doing some Angular lately and 😑
+                <br /> fine with NestJS though 🙄
               </span>
             </div>
           </div>
@@ -170,6 +148,13 @@ export default function Home() {
         </div>
         <div className="w-1/2 ml-5">
           <h2 className="section-title">Experiences</h2>
+          <div className="flex my-7">
+            <span className="w-3/12 mr-3 section-sub-title">Now</span>
+            <div className="w-9/12 ml-3 hover:cursor-pointer hover:underline">
+              <h3 className="section-content">VNPT IT</h3>
+              {/* <span className="section-content-description">Software Developer (still)</span> */}
+            </div>
+          </div>
           <div className="flex my-7">
             <span className="w-3/12 mr-3 section-sub-title">Jun 2020 to Mar 2022</span>
             <Link href={'/posts/misc/efa6e6bb-4762-43a5-95e7-644ee2c43004'}>
@@ -200,6 +185,7 @@ export default function Home() {
           <h2 className="section-title">Vibing (‾◡◝)♪ </h2>
           <div className="">
             <iframe
+              suppressHydrationWarning
               ref={spotify}
               id="spotify"
               src={playlistURL}
@@ -212,5 +198,70 @@ export default function Home() {
         </div>
       </div>
     </>
+  );
+}
+
+function Lightrope({ theme, lightropeRef }) {
+  return (
+    <div className="container -mt-14 flex">
+      <img
+        src="https://www.svgrepo.com/show/184602/christmas-sock-christmas.svg"
+        alt=""
+        className="h-14 w-14"
+      />
+      <ul
+        className={`${style.lightrope} ${theme === 'dark' ? style.on : ''}`}
+        ref={lightropeRef}
+      >
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+      <img
+        src="https://www.svgrepo.com/show/184560/bauble-christmas.svg"
+        alt=""
+        className="h-12 w-12"
+        style={{ transform: 'scaleX(-1)' }}
+      />
+    </div>
   );
 }
