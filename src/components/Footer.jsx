@@ -54,10 +54,10 @@ const Footer = () => {
       >
         ☝️
       </div>
-      <div ref={footerRef} className="container flex flex-col justify-items-start h-16">
+      <div ref={footerRef} className="container flex flex-col h-16">
         {/* once this divider is scroll passed then the scrollTop btn is shown */}
         <div className="border-t border-opacity-75 pb-2" ref={dividerRef} />
-        <div className="container flex justify-between text-base flex-grow leading-10">
+        <div className="container flex flex-col xl:flex-row justify-between text-base flex-grow leading-10">
           <div className="group">
             <span
               className="underline cursor-pointer"

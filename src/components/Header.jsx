@@ -1,23 +1,25 @@
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   const { resolvedTheme: theme, setTheme } = useTheme();
   const toggleMode = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
+  const router = useRouter();
 
   return (
-    <div className="container mt-5">
-      <div className="flex my-auto relative justify-between">
+    <div className="container mt-8">
+      <div className="flex flex-col items-center xl:flex-row xl:justify-between gap-y-5">
         <div>
-          <div className="flex items-center">
+          <div className="flex items-center text-center justify-center xl:justify-start gap-3">
             <Link href={'/'}>
-              <div className="text-7xl font-light mr-2 dark:text-primary hover:cursor-pointer">
+              <div className="text-7xl font-light dark:text-primary hover:cursor-pointer">
                 <span className="font-semibold">Đức</span> Mạnh
               </div>
             </Link>
-            <span className="w-64 text-center bg-primary round ml-2 text-primary rounded-md py-4 leading-none h-12 font-semibold text-lg dark:text-bg-primary dark:bg-text-primary">
+            <span className="w-64 text-center bg-primary round ml-2 text-primary rounded-md py-4 leading-none h-12 font-semibold text-lg dark:text-bg-primary dark:bg-text-primary hidden xl:block">
               ༼つ◕_◕ ༽つ{' '}
               <span suppressHydrationWarning id="mode-text">
                 {theme === 'dark' ? 'go blind' : 'dim it'}
@@ -31,17 +33,9 @@ const Header = () => {
                 please!
               </span>
             </span>
-            <img
-              src="https://www.svgrepo.com/show/206787/star-christmas-tree.svg"
-              alt=""
-              className="w-11 ml-2 opacity-80 dark:opacity-100 hover:opacity-100"
-            />
           </div>
-          <span className="text-2xl text-custom-gray font-light ">
-            full-time programmer - sometimes writer - all-time clueless
-          </span>
         </div>
-        <div className="flex items-start">
+        <div className="flex justify-center gap-6">
           <a href="https://github.com/oktesting" target="_blank" rel="noreferrer">
             <img
               src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/github.svg"
@@ -80,6 +74,11 @@ const Header = () => {
           </a>
         </div>
       </div>
+      {router.pathname.includes('posts') && (
+        <div className="text-center xl:text-left text-2xl text-custom-gray font-light my-1">
+          full-time programmer - sometimes writer - all-time clueless
+        </div>
+      )}
     </div>
   );
 };

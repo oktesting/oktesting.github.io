@@ -9,7 +9,7 @@ body {
 
 .content-wrapper {
   /* smooth transition between theme */
-  transition: background-color 0.25s; 
+  transition: background-color 0.25s;
 }
 
 @tailwind base;
@@ -35,11 +35,14 @@ body {
   }
 
   .container {
-    @apply mx-auto max-w-6xl;
+    /* < 1280 => mobile view */
+    @apply max-w-none px-4;
+    /* >= 1280 => desktop view */
+    @apply xl:max-w-[72rem] xl:px-0 mx-auto;
   }
 
   .section-title {
-    @apply text-2xl font-semibold mb-4;
+    @apply text-2xl font-semibold;
   }
 
   .section-sub-title {
@@ -47,7 +50,7 @@ body {
   }
 
   .section-content {
-    @apply text-xl text-custom-purple font-semibold;
+    @apply text-lg text-custom-purple font-semibold;
   }
 
   .section-content-description {
