@@ -3,18 +3,9 @@
 import Head from 'next/head';
 import style from '../styles/homepage.module.scss';
 import { useTheme } from 'next-themes';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import {
-  isAfter,
-  isBefore,
-  setMonth,
-  addWeeks,
-  setDate,
-  endOfYear,
-  startOfDay,
-  startOfYear
-} from 'date-fns';
+import useHolidaySeason from '../hooks/useHolidaySeason';
 
 const BASE_PLAYLIST_URL =
   'https://open.spotify.com/embed/playlist/7dI5P0psZVQYmD9VHJIoSR';
@@ -29,31 +20,10 @@ export default function Home() {
   // once loaded, force lightrope and spotify elements to dark theme property since its initial states don't include them
   const lightrope = useRef();
   const spotify = useRef();
-  const [isHolidaySeason, setHolidaySeason] = useState(false);
+  const isHolidaySeason = useHolidaySeason();
 
   useEffect(() => {
-    const today = new Date();
-    /**
-     * holiday season decor often starts at december first "this year" and last to new year eve plus 1 week later "next year".
-     * this "this year" + "last year" situation can be solve by:
-     * spliting holiday season of one year into 2 range, beginning of the year range and ending of the year range
-     */
-
-    // beginning of the year range
-    const decemberFirst = startOfDay(setDate(setMonth(today, 11), 1));
-    const decemberLast = endOfYear(today);
-
-    // ending of the year range
-    const januaryFirst = startOfYear(today);
-    const januaryFirstPlus1Week = addWeeks(januaryFirst, 1);
-
-    setHolidaySeason(
-      (isAfter(today, decemberFirst) && isBefore(today, decemberLast)) ||
-        (isAfter(today, januaryFirst) && isBefore(today, januaryFirstPlus1Week))
-    );
-
-    if (!isHolidaySeason) return;
-    if (theme === 'dark') {
+    if (isHolidaySeason && theme === 'dark') {
       lightrope.current.classList?.add(style.on);
       spotify.current.src = playlistURL;
     }

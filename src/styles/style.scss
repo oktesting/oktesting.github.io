@@ -1,0 +1,35 @@
+.cursor-snow {
+  cursor: url('/christmas-cold-ice-svgrepo-com.svg'), auto;
+}
+
+.bg-christmas {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* below 1440px width: no bg */
+  @media (max-width: 1439px) {
+    background-image: none !important;
+  }
+  &.bg-christmas-tree-dark {
+    background-image: url('/christmas-fireplace-holiday-svgrepo-com.svg'),
+      url('/christmas-tree-svgrepo-com.svg');
+    background-size: auto 250px, auto 400px;
+    background-position: right 30px bottom -32px, right -135px bottom -18px;
+
+    @media (min-width: 1920px) {
+      background-size: auto 350px, auto 500px;
+      background-position: right 100px bottom -54px, right -150px bottom -24px;
+    }
+  }
+
+  &.bg-christmas-tree-light {
+    background-image: url('/christmas-snow-snowman-svgrepo-com.svg'),
+      url('/christmas-tree-svgrepo-com.svg');
+    background-size: auto 250px, auto 400px;
+    background-position: right 55px bottom -16px, right -135px bottom -18px;
+
+    @media (min-width: 1920px) {
+      background-size: auto 350px, auto 500px;
+      background-position: right 100px bottom -32px, right -150px bottom -24px;
+    }
+  }
+}
