@@ -225,7 +225,7 @@ export default function Home() {
 
 function Lightrope({ theme, lightropeRef }) {
   return (
-    <div className="container -mt-14 flex">
+    <div className="container -mt-10 flex">
       <img
         src="https://www.svgrepo.com/show/184602/christmas-sock-christmas.svg"
         alt=""
